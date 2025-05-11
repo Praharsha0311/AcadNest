@@ -130,67 +130,7 @@
     </div>
   </div>
 
-  <script type="module">
-    import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai";
-
-
-    const generationConfig = {
-      temperature: 0.7,
-      topK: 1,
-      topP: 1,
-      maxOutputTokens: 1000,
-    };
-
-    const chatbox = document.getElementById("chatbox");
-    const messages = document.getElementById("messages");
-    const userInput = document.getElementById("userInput");
-    const sendButton = document.getElementById("sendButton");
-
-    sendButton.addEventListener("click", sendMessage);
-    userInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-
-    function appendMessage(message, sender) {
-      const div = document.createElement("div");
-      div.className = sender;
-      div.innerText = message;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-    }
-
-    async function sendMessage() {
-      const message = userInput.value.trim();
-      if (!message) return;
-
-      appendMessage(message, "user");
-      userInput.value = "";
-
-      try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-        const parts = {
-          text: message
-        };
-
-        const result = await model.generateContent({
-          contents: [{ role: "user", parts }],
-          generationConfig
-        });
-
-        const response = result.response;
-        const text = response.text();
-
-        appendMessage(text, "bot");
-      } catch (error) {
-        console.error(error);
-        appendMessage("Error! Unable to respond.", "bot");
-      }
-    }
-  </script>
+  
 
 </body>
 </html>
